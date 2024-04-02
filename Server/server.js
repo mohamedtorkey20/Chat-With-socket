@@ -1,7 +1,7 @@
 const express=require("express");
 const app=express();
 const { Server }=require("socket.io");
-const PORT=process.env.PORT||3500;
+const PORT=process.env.PORT||3510;
 const path=require('path');
 
 
@@ -10,9 +10,6 @@ app.get("/",(req,res)=>{
     res.sendFile(path.join(__dirname,"../Client/main.html"));
 })
 
-app.get("/style.css",(req,res)=>{
-    res.sendFile(path.join(__dirname,"../Client/style.css"));
-})
 
 app.get("/script.js",(req,res)=>{
     res.sendFile(path.join(__dirname,"../Client/script.js"));
