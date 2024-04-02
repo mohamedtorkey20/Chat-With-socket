@@ -1,28 +1,32 @@
-
-const socket = io()
+const socket = io();
 
 function sendMessage(e) {
-    e.preventDefault()
-    const input = document.querySelector('input')
-    if (input.value) {
-        socket.emit('message', input.value)
-        input.value = ""
+    e.preventDefault();
+    const input = document.querySelector('#message-input');
+    if (input.value.trim()) {
+        socket.emit('message', input.value);
+        input.value = "";
     }
-    input.focus()
+    input.focus();
 }
 
-document.querySelector('form')
-    .addEventListener('submit', sendMessage)
+document.querySelector('#message-form')
+    .addEventListener('submit', sendMessage);
 
 // Listen for messages 
 socket.on("message", (data) => {
-    const p = document.createElement('p');
+    const chatContainer = document.querySelector('#chat-container');
     const div = document.createElement('div');
-    div.classList.add("flex-shrink-1", "bg-light", "rounded", "py-2", "px-3", "ml-3");
-
-    const t = document.querySelector('#mesge1');
-    t.appendChild(div);
-    div.appendChild(p); 
-
+    const p = document.createElement('p');
     p.textContent = data;
+    
+    // Check if the message is from the current user or another user
+    if (data.includes(socket.id)) {
+        div.classList.add("user-message", "flex-shrink-1", "bg-light", "rounded", "py-2", "px-3", "ml-3");
+    } else {
+        div.classList.add("other-user-message", "flex-shrink-1", "bg-light", "rounded", "py-2", "px-3", "mr-3");
+    }
+    
+    div.appendChild(p);
+    chatContainer.appendChild(div);
 });
