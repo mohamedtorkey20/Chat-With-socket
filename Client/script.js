@@ -22,9 +22,9 @@ socket.on("message", (data) => {
     
     // Check if the message is from the current user or another user
     if (data.includes(socket.id)) {
-        div.classList.add("user-message", "flex-shrink-1", "bg-light", "rounded", "py-2", "px-3", "ml-3");
+        div.classList.add("user-message", "flex-shrink-1", "bg-light", "rounded", "py-1", "px-1", "ml-3","mb-2");
     } else {
-        div.classList.add("other-user-message", "flex-shrink-1", "bg-light", "rounded", "py-2", "px-3", "mr-3");
+        div.classList.add("other-user-message", "flex-shrink-1", "bg-light", "rounded", "py-1", "px-1", "mr-3","mb-2");
     }
     
     div.appendChild(p);
