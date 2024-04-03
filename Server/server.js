@@ -10,9 +10,12 @@ app.get("/",(req,res)=>{
     res.sendFile(path.join(__dirname,"../Client/main.html"));
 })
 
-
 app.get("/script.js",(req,res)=>{
     res.sendFile(path.join(__dirname,"../Client/script.js"));
+})
+
+app.get("/style.css",(req,res)=>{
+    res.sendFile(path.join(__dirname,"../Client/style.css"));
 })
 
 app.all("*",(req,res)=>{
@@ -31,6 +34,6 @@ io.on('connection', socket => {
 
     socket.on('message', data => {
         console.log(data)
-        io.emit('message',data)
-    })
-})
+        io.emit('message', { id: socket.id, message: data });
+    });
+});

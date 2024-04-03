@@ -13,20 +13,43 @@ function sendMessage(e) {
 document.querySelector('#message-form')
     .addEventListener('submit', sendMessage);
 
-// Listen for messages 
+
 socket.on("message", (data) => {
     const chatContainer = document.querySelector('#chat-container');
-    const div = document.createElement('div');
+    const div_p = document.createElement('div');
+    const div_ch = document.createElement('div');
     const p = document.createElement('p');
-    p.textContent = data;
-    
-    // Check if the message is from the current user or another user
-    if (data.includes(socket.id)) {
-        div.classList.add("user-message", "flex-shrink-1", "bg-light", "rounded", "py-1", "px-1", "ml-3","mb-2");
+    const img = document.createElement('img');
+
+    //---------------------Check if the message is from the current user--------------------
+    if (data.id === socket.id) {
+        div_p.classList.add("d-flex", "flex-row","justify-content-start","mb-4");
+        img.src = "https://cdn-icons-png.flaticon.com/512/4202/4202831.png "; 
+        div_ch.classList.add("p-3","ms-3","user-message");
+        p.textContent = `you:${data.message}`;
+        p.classList.add("small","mb-0")
+        
+        img.alt = "Avatar";
+        img.classList.add("avatar");
+        div_p.appendChild(img);
+        div_ch.appendChild(p);
+        div_p.appendChild(div_ch);
+        chatContainer.appendChild(div_p);
+        
     } else {
-        div.classList.add("other-user-message", "flex-shrink-1", "bg-light", "rounded", "py-1", "px-1", "mr-3","mb-2");
+        div_p.classList.add("d-flex", "flex-row","justify-content-end","mb-4");
+        img.src = "https://cdn-icons-png.flaticon.com/512/3048/3048122.png"; 
+        div_ch.classList.add("p-3","me-3","border","other-user-message");
+        p.textContent = `${data.message}`;
+        p.classList.add("small","mb-0")
+
+        img.alt = "Avatar";
+        img.classList.add("avatar");
+        div_ch.appendChild(p);
+        div_p.appendChild(div_ch);
+        div_p.appendChild(img);
+        chatContainer.appendChild(div_p);
     }
-    
-    div.appendChild(p);
-    chatContainer.appendChild(div);
+
+ 
 });
